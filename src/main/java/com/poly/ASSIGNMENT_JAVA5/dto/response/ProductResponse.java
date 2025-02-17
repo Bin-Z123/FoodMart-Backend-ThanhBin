@@ -19,6 +19,7 @@ public class ProductResponse {
     BigDecimal discount = new BigDecimal(0);
     int stockQuantity;
     int soldQuantity;
+    String description;
     Date createAt;
     Long category_id;
     String category_name;

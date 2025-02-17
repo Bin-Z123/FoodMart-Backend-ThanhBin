@@ -26,8 +26,6 @@ public class SecurityConfig {
                 )//Config login
                 .formLogin(AbstractHttpConfigurer::disable).httpBasic(AbstractHttpConfigurer::disable)
         ;
-
-
         return httpSecurity.build();
     }
     @Bean

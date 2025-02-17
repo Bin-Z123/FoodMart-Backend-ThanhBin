@@ -1,6 +1,8 @@
 package com.poly.ASSIGNMENT_JAVA5.controller;
 
+import com.poly.ASSIGNMENT_JAVA5.dto.request.ProductCreationRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.request.ProductUpdateRequest;
+import com.poly.ASSIGNMENT_JAVA5.dto.response.ApiResponse;
 import com.poly.ASSIGNMENT_JAVA5.dto.response.ProductResponse;
 import com.poly.ASSIGNMENT_JAVA5.service.ProductService;
 import lombok.AccessLevel;
@@ -35,5 +37,13 @@ public class ProductController {
     @PutMapping("/product/{id}")
     public ProductResponse updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request){
         return productService.updateProducts(id,request);
+    }
+
+//    POST
+    @PostMapping("/product")
+    public ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreationRequest request){
+        ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(productService.createProducts(request));
+        return apiResponse;
     }
 }

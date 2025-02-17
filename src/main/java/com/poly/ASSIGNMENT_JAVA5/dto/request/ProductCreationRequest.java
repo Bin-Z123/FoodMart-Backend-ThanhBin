@@ -18,11 +18,9 @@ import java.util.Date;
 public class ProductCreationRequest {
     String nameProduct;
     BigDecimal price;
-    String image;
-    boolean status = true;
-    BigDecimal discount = new BigDecimal(0);
+//    String image;
+    BigDecimal discount ;
     int stockQuantity;
-    int soldQuantity = 0;
-    Date createAt;
+    String description;
     Category category;
 }

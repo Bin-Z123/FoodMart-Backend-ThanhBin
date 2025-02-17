@@ -20,5 +20,6 @@ public class ProductUpdateRequest {
     boolean status = true;
     BigDecimal discount = new BigDecimal(0);
     int stockQuantity;
+    String description;
     Category category;
 }

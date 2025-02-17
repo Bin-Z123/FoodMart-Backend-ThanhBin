@@ -41,9 +41,9 @@ public class ProductService {
         return productMapper.toProductResponse(productRepository.save(product));
     }
     //Post Product
-    public Product createProducts(ProductCreationRequest request){
+    public ProductResponse createProducts(ProductCreationRequest request){
         Product product = productMapper.toProductRequest(request);
-        return productRepository.save(product);
+        return productMapper.toProductResponse(productRepository.save(product));
     }
 
 }

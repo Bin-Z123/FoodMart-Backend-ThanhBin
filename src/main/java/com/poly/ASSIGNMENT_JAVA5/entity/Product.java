@@ -6,7 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="products")
@@ -22,12 +22,13 @@ public class Product {
     Long id;
     String nameProduct;
     BigDecimal price;
-    String image;
+    String image = "photoDefault.jpg";
     boolean status = true;
     BigDecimal discount = new BigDecimal(0);
     int stockQuantity;
     int soldQuantity;
-    Date createAt;
+    LocalDateTime createAt = LocalDateTime.now();
+    String description;
     @ManyToOne//fetch = FetchType.EAGERs
     @JoinColumn(name = "id_category")
     @JsonBackReference
