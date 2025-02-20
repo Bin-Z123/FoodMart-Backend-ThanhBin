@@ -14,5 +14,5 @@ public class UserUpdateRequest {
     @Size(min = 6, max = 18)
     String password;
     Boolean role = true;
-    String avatar = "avt";
+    String avatar = "avt.jpg";
 }

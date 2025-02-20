@@ -19,7 +19,5 @@ public class CategoryResponse {
     boolean status = true;
     Date createAt;
     String description;
-//    @OneToMany(mappedBy = "category")
-//    @JsonManagedReference
     List<Product> product;
 }

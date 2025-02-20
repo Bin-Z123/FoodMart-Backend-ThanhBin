@@ -4,13 +4,24 @@ import com.poly.ASSIGNMENT_JAVA5.dto.request.UserCreationRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.request.UserUpdateRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.response.UserResponse;
 import com.poly.ASSIGNMENT_JAVA5.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper
 {
-    User toUser(UserCreationRequest request);
+    @Mapping(target = "password", source = "password", qualifiedByName = "passwordEncoder")
+    User toUser(UserCreationRequest request, @Context PasswordEncoder passwordEncoder);
+
     UserResponse toUserResponse(User user);
-    void updateUser(@MappingTarget User user, UserUpdateRequest request);
+
+    @Mapping(target = "password", source = "password", qualifiedByName = "passwordEncoder")
+    void updateUser(@MappingTarget User user, UserUpdateRequest request, @Context PasswordEncoder passwordEncoder);
+
+    @Named("passwordEncoder")
+    default String passwordEncoder(String password, @Context PasswordEncoder passwordEncoder)
+    {
+        return passwordEncoder.encode(password);
+    }
+
 }

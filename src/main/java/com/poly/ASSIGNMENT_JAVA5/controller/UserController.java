@@ -2,6 +2,7 @@ package com.poly.ASSIGNMENT_JAVA5.controller;
 
 import com.poly.ASSIGNMENT_JAVA5.dto.request.UserCreationRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.request.UserUpdateRequest;
+import com.poly.ASSIGNMENT_JAVA5.dto.response.ApiResponse;
 import com.poly.ASSIGNMENT_JAVA5.dto.response.UserResponse;
 import com.poly.ASSIGNMENT_JAVA5.entity.User;
 import com.poly.ASSIGNMENT_JAVA5.service.UserService;
@@ -31,12 +32,24 @@ public class UserController {
     }
 //    Put
     @PutMapping("/user/{id}")
-    public UserResponse updateUser(@PathVariable Long id,@RequestBody UserUpdateRequest request){
-        return userService.updateUsers(id,request);
+    public ApiResponse<UserResponse> updateUser(@PathVariable Long id,@RequestBody UserUpdateRequest request){
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.updateUsers(id,request));
+        return apiResponse;
     }
 //    Post
     @PostMapping("/user")
-    public UserResponse createUser(@RequestBody UserCreationRequest request){
-        return userService.createUsers(request);
+    public ApiResponse<UserResponse> createUser(@RequestBody UserCreationRequest request){
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.createUsers(request));
+        return apiResponse;
+    }
+//    Delete
+    @DeleteMapping("/user/{id}")
+    public ApiResponse<String> deleteUser(@PathVariable Long id){
+        userService.deleteUsers(id);
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        apiResponse.setMessage("Delete Success User with id: "+id);
+        return apiResponse;
     }
 }

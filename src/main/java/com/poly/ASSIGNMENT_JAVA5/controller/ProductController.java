@@ -35,8 +35,10 @@ public class ProductController {
 
     //Put
     @PutMapping("/product/{id}")
-    public ProductResponse updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request){
-        return productService.updateProducts(id,request);
+    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request){
+        ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(productService.updateProducts(id,request));
+        return apiResponse;
     }
 
 //    POST
@@ -44,6 +46,14 @@ public class ProductController {
     public ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreationRequest request){
         ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(productService.createProducts(request));
+        return apiResponse;
+    }
+//    DELETE
+    @DeleteMapping("/product/{id}")
+    public ApiResponse<String> deleteProduct(@PathVariable Long id){
+        productService.deleteProducts(id);
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        apiResponse.setMessage("Delete Success with id: "+id);
         return apiResponse;
     }
 }

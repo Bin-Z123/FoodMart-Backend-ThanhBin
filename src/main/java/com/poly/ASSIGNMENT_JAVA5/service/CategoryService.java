@@ -1,10 +1,12 @@
 package com.poly.ASSIGNMENT_JAVA5.service;
 
+import com.poly.ASSIGNMENT_JAVA5.dto.request.CategoryCreationRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.request.CategoryUpdateRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.response.CategoryResponse;
 import com.poly.ASSIGNMENT_JAVA5.entity.Category;
 import com.poly.ASSIGNMENT_JAVA5.mapper.CategoryMapper;
 import com.poly.ASSIGNMENT_JAVA5.repository.CategoryRepository;
+import com.poly.ASSIGNMENT_JAVA5.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,13 @@ import java.util.stream.Collectors;
 public class CategoryService {
     CategoryRepository categoryRepository;
     CategoryMapper categoryMapper;
+    private final ProductRepository productRepository;
+
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, ProductRepository productRepository) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
+        this.productRepository = productRepository;
     }
 
     //Get
@@ -37,5 +42,14 @@ public class CategoryService {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
         categoryMapper.updateCategory(category,request);
         return categoryMapper.toCategoryResponse(categoryRepository.save(category));
+    }
+    //POST
+    public CategoryResponse createCategories(CategoryCreationRequest request){
+        Category category =  categoryMapper.toCategory(request);
+        return categoryMapper.toCategoryResponse(categoryRepository.save(category));
+    }
+    //DELETE
+    public void deleteCategories(Long id){
+        productRepository.deleteById(id);
     }
 }

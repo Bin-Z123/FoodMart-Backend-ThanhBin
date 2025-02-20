@@ -1,6 +1,8 @@
 package com.poly.ASSIGNMENT_JAVA5.controller;
 
+import com.poly.ASSIGNMENT_JAVA5.dto.request.CategoryCreationRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.request.CategoryUpdateRequest;
+import com.poly.ASSIGNMENT_JAVA5.dto.response.ApiResponse;
 import com.poly.ASSIGNMENT_JAVA5.dto.response.CategoryResponse;
 import com.poly.ASSIGNMENT_JAVA5.service.CategoryService;
 import lombok.AccessLevel;
@@ -29,7 +31,25 @@ public class CategoryController {
     }
 //    Put
     @PutMapping("/category/{id}")
-    public CategoryResponse updateCategory(@PathVariable Long id, @RequestBody CategoryUpdateRequest request){
-        return categoryService.updateCategories(id,request);
+    public ApiResponse<CategoryResponse> updateCategory(@PathVariable Long id, @RequestBody CategoryUpdateRequest request){
+        ApiResponse<CategoryResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(categoryService.updateCategories(id,request));
+        return apiResponse;
     }
+    //Post
+    @PostMapping("/category")
+    public ApiResponse<CategoryResponse> createCategory(@RequestBody CategoryCreationRequest request){
+        ApiResponse<CategoryResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(categoryService.createCategories(request));
+        return apiResponse;
+    }
+    //Delete
+    @DeleteMapping("/category/{id}")
+    public ApiResponse<String> deleteCategory(@PathVariable Long id){
+        categoryService.deleteCategories(id);
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        apiResponse.setMessage("Delete Success category with id: "+id);
+        return apiResponse;
+    }
+
 }

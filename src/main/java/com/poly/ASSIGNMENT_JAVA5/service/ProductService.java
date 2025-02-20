@@ -42,8 +42,12 @@ public class ProductService {
     }
     //Post Product
     public ProductResponse createProducts(ProductCreationRequest request){
-        Product product = productMapper.toProductRequest(request);
+        Product product = productMapper.toProduct(request);
         return productMapper.toProductResponse(productRepository.save(product));
+    }
+//    Del Product
+    public void deleteProducts(Long id){
+        productRepository.deleteById(id);
     }
 
 }

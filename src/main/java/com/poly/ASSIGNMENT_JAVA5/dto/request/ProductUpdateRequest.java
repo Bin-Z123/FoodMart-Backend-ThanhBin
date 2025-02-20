@@ -18,8 +18,7 @@ public class ProductUpdateRequest {
     BigDecimal price;
     String image;
     boolean status = true;
-    BigDecimal discount = new BigDecimal(0);
-    int stockQuantity;
+    BigDecimal discount ;
     String description;
     Category category;
 }

@@ -13,6 +13,6 @@ public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
     CategoryResponse toCategoryResponse(Category category);
-    Category toCategoryRequest(CategoryCreationRequest request);
+    Category toCategory(CategoryCreationRequest request);
     void updateCategory(@MappingTarget Category category, CategoryUpdateRequest request);
 }

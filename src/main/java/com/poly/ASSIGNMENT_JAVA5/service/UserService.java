@@ -7,8 +7,10 @@ import com.poly.ASSIGNMENT_JAVA5.entity.User;
 import com.poly.ASSIGNMENT_JAVA5.mapper.UserMapper;
 import com.poly.ASSIGNMENT_JAVA5.repository.UserRepository;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +18,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
-    @Autowired
-    public UserService(UserMapper userMapper, UserRepository userRepository) {
-        this.userMapper = userMapper;
-        this.userRepository = userRepository;
-    }
+    PasswordEncoder passwordEncoder;
     //Get user
     public List<UserResponse> getAllUsers(){
         return userRepository.findAll().stream().map(userMapper::toUserResponse).collect(Collectors.toList());
@@ -37,14 +36,13 @@ public class UserService {
         if (userRepository.existsByUsername(request.getUsername())){
             throw new RuntimeException("Username exists");
         }
-        User user = new User();
-        user = userMapper.toUser(request);
+        User user = userMapper.toUser(request,passwordEncoder);
         return userMapper.toUserResponse(userRepository.save(user));
     }
 //    Put User
     public UserResponse updateUsers(Long id ,UserUpdateRequest request){
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        userMapper.updateUser(user,request);
+        userMapper.updateUser(user,request,passwordEncoder);
         return userMapper.toUserResponse(userRepository.save(user));
     }
 //    Del User
