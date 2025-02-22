@@ -35,15 +35,20 @@ public class ProductController {
     }
 
     //Put
-    @PutMapping("/product/{id}")
-    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestPart("product") ProductUpdateRequest request, @RequestPart("file") MultipartFile file){
+    @PutMapping("/admin/product/{id}")
+    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestPart("product") ProductUpdateRequest request, @RequestPart(value = "file", required = false) MultipartFile file){
         ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(productService.updateProducts(id,request, file));
+        if (file != null && !file.isEmpty()) {
+            apiResponse.setResult(productService.updateProducts(id, request, file));
+        } else {
+            apiResponse.setResult(productService.updateProducts(id, request, null)); // Không có file
+        }
+
         return apiResponse;
     }
 
 //    POST
-    @PostMapping("/product")
+    @PostMapping("/admin/product")
     public ApiResponse<ProductResponse> createProduct(@RequestPart("product") ProductCreationRequest request, @RequestPart("file")MultipartFile file){
         System.out.println("Dữ liệu nhân được: "+ request);
         System.out.println("Ảnh: " + request.getImage());
@@ -53,7 +58,7 @@ public class ProductController {
         return apiResponse;
     }
 //    DELETE
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/admin/product/{id}")
     public ApiResponse<String> deleteProduct(@PathVariable Long id){
         productService.deleteProducts(id);
         ApiResponse<String> apiResponse = new ApiResponse<>();
