@@ -7,24 +7,23 @@ import com.poly.ASSIGNMENT_JAVA5.entity.Product;
 import com.poly.ASSIGNMENT_JAVA5.mapper.ProductMapper;
 import com.poly.ASSIGNMENT_JAVA5.repository.ProductRepository;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductService {
-    ProductRepository productRepository;
-    ProductMapper productMapper;
-    @Autowired
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
-        this.productRepository = productRepository;
-        this.productMapper = productMapper;
-    }
+    final ProductRepository productRepository;
+    final ProductMapper productMapper;
+    final CloudinaryService cloudinaryService;
 
     //Get Product
     public List<ProductResponse> getAllProducts(){
@@ -35,13 +34,17 @@ public class ProductService {
         return productRepository.findById(id).map(productMapper::toProductResponse);
     }
     //Put Product
-    public ProductResponse updateProducts(Long id, ProductUpdateRequest request){
+    public ProductResponse updateProducts(Long id, ProductUpdateRequest request, MultipartFile file){
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        if(file != null && !file.isEmpty()){
+            cloudinaryService.uploadFile(file);
+        }
         productMapper.updateProduct(product, request);
         return productMapper.toProductResponse(productRepository.save(product));
     }
     //Post Product
-    public ProductResponse createProducts(ProductCreationRequest request){
+    public ProductResponse createProducts(ProductCreationRequest request, MultipartFile file){
+        cloudinaryService.uploadFile(file);
         Product product = productMapper.toProduct(request);
         return productMapper.toProductResponse(productRepository.save(product));
     }

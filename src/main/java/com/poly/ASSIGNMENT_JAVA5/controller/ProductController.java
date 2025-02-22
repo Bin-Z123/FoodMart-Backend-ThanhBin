@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,17 +36,20 @@ public class ProductController {
 
     //Put
     @PutMapping("/product/{id}")
-    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request){
+    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestPart("product") ProductUpdateRequest request, @RequestPart("file") MultipartFile file){
         ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(productService.updateProducts(id,request));
+        apiResponse.setResult(productService.updateProducts(id,request, file));
         return apiResponse;
     }
 
 //    POST
     @PostMapping("/product")
-    public ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreationRequest request){
+    public ApiResponse<ProductResponse> createProduct(@RequestPart("product") ProductCreationRequest request, @RequestPart("file")MultipartFile file){
+        System.out.println("Dữ liệu nhân được: "+ request);
+        System.out.println("Ảnh: " + request.getImage());
+        System.out.println("File: "+file);
         ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(productService.createProducts(request));
+        apiResponse.setResult(productService.createProducts(request,file));
         return apiResponse;
     }
 //    DELETE

@@ -22,9 +22,9 @@ public class Product {
     Long id;
     String nameProduct;
     BigDecimal price;
-    String image = "photoDefault.jpg";
+    String image;
     boolean status = true;
-    BigDecimal discount = new BigDecimal(0);
+    BigDecimal discount;
     int stockQuantity;
     int soldQuantity;
     LocalDateTime createAt = LocalDateTime.now();

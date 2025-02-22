@@ -21,4 +21,5 @@ public class ProductUpdateRequest {
     BigDecimal discount ;
     String description;
     Category category;
+    Long category_id;
 }
