@@ -16,5 +16,5 @@ public class UserCreationRequest {
     String password;
     String email;
     String fullname;
-    Boolean role = true;
+    Boolean role = false;
 }

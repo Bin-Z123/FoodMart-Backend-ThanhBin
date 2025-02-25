@@ -17,6 +17,6 @@ public interface AddressMapper
     @Mapping(target = "user_fullname", source = "user.fullname")
     AddressResponse toAddressResponse(Address address);
 
-    Address toAddressRequest(AddressCreationRequest request);
+    Address toAddress(AddressCreationRequest request);
     void updateAddress(@MappingTarget Address address, AddressUpdateRequest request);
 }

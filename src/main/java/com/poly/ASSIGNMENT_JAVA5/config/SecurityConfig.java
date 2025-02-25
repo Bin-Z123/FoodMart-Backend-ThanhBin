@@ -8,11 +8,12 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,35 +33,48 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, CorsConfigurationSource corsConfigurationSource) throws Exception {
         httpSecurity
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/login","/logout","/api/admin/**"))
+                        .ignoringRequestMatchers("/login","/logout","/api/admin/**","/api/user/cart/**","/api/register/**"))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("ADMIN","USER")
                         .anyRequest().permitAll()
-                )//Config login
+                )
+                //Config login
                 .formLogin(form -> form.
                         loginProcessingUrl("/login")
                         .successHandler(((request, response, authentication) -> {
                             response.setStatus(HttpServletResponse.SC_OK);
                         }))
-//                        .defaultSuccessUrl("http://localhost:8080/ ",true)
-                        .failureUrl("/login?error=true")
-
+                        .failureHandler((request, response, exception) -> {
+                            if(exception instanceof UsernameNotFoundException  ){
+                                response.setStatus(HttpServletResponse.SC_NOT_FOUND);//404
+                            } else if (exception instanceof BadCredentialsException) {
+                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401
+                            }else {
+                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            }
+                        })
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll())
                 .sessionManagement(session -> session
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false))
+//                Config khi chưa đăng nhập
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) ->
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
-                )
+                        .authenticationEntryPoint((request, response, authException) ->{
+                            response.setContentType("application/json");
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("{\"code\": 401, \"message\": \"Unauthorized\"}");
+                        }
+                ))
         ;
         return httpSecurity.build();
     }

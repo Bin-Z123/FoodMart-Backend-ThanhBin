@@ -1,5 +1,6 @@
 package com.poly.ASSIGNMENT_JAVA5.service;
 
+import com.poly.ASSIGNMENT_JAVA5.dto.request.AddressCreationRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.request.AddressUpdateRequest;
 import com.poly.ASSIGNMENT_JAVA5.dto.response.AddressResponse;
 import com.poly.ASSIGNMENT_JAVA5.entity.Address;
@@ -27,6 +28,9 @@ public class AddressService {
     public Optional<AddressResponse> getByID(Long id){
         return addressRepository.findById(id).map(addressMapper::toAddressResponse);
     }
+    public List<Address> getAllByUserId(Long userID){
+        return addressRepository.findAllByUser_Id(userID);
+    }
     //Put
     public AddressResponse update(Long id, AddressUpdateRequest request){
         Address address = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Address not found"));
@@ -34,7 +38,8 @@ public class AddressService {
         return addressMapper.toAddressResponse(addressRepository.save(address));
     }
     //Post
-    public AddressResponse create(Address address){
+    public AddressResponse create(AddressCreationRequest request){
+        Address address = addressMapper.toAddress(request);
         return addressMapper.toAddressResponse(addressRepository.save(address));
     }
     //Del

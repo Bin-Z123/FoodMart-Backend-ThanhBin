@@ -28,12 +28,12 @@ public class CartController {
     public List<Cart> getAll(){
         return cartService.getAll();
     }
-    @GetMapping("/cart/{id}")
+    @GetMapping("/user/cart/{id}")
     public List<Cart> getAllByUserId(@PathVariable Long id){
         return cartService.findAllByUser_Id(id);
     }
     //Post
-    @PostMapping("/cart")
+    @PostMapping("/user/cart")
     public Cart addToCart(@RequestBody CartRequest request){
         return cartService.addToCart(request);
     }
