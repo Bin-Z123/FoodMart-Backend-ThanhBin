@@ -1,24 +1,20 @@
-package com.poly.ASSIGNMENT_JAVA5.entity;
+package com.poly.ASSIGNMENT_JAVA5.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import com.poly.ASSIGNMENT_JAVA5.entity.User;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "Orders")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderCreationRequest {
     LocalDateTime orderDate = LocalDateTime.now();
     BigDecimal totalAmount;
     Boolean status;
@@ -26,9 +22,5 @@ public class Order {
     String updateAt;
     String paymentStatus;
     String description;
-    @ManyToOne
-    @JoinColumn(name = "iduser")
-    @JsonBackReference
     User user;
-
 }

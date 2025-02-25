@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-    String username;
-    String password;
+public class OrderUpdateRequest {
+    Boolean status;
 }
