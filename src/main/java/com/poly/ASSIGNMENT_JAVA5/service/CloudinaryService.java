@@ -27,9 +27,6 @@ public class CloudinaryService {
                     "folder","asm-java5",
                     "public_id",fileNameWithoutExtension
             ));
-//            Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
-//                    ObjectUtils.asMap("folder","asm-java5"));
-//            return uploadResult.get("url").toString();
         } catch (IOException e) {
             throw new RuntimeException("Upload Failed",e);
         }

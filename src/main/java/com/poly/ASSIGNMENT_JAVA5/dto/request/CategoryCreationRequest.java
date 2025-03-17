@@ -3,6 +3,7 @@ package com.poly.ASSIGNMENT_JAVA5.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
@@ -12,6 +13,6 @@ import java.util.Date;
 public class CategoryCreationRequest {
     String name;
     boolean status = true;
-    Date createAt;
+    LocalDateTime createAt = LocalDateTime.now();
     String description;
 }

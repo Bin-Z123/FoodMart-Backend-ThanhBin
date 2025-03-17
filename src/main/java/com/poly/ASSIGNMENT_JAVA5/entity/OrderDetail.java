@@ -1,5 +1,6 @@
 package com.poly.ASSIGNMENT_JAVA5.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,8 +24,10 @@ public class OrderDetail {
     String description;
     @ManyToOne
     @JoinColumn(name = "idorder")
+    @JsonBackReference
     Order order;
     @ManyToOne
     @JoinColumn(name = "idproduct")
+    @JsonBackReference
     Product product;
 }

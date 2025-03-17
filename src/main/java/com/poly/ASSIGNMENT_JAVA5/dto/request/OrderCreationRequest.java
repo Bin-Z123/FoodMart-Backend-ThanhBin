@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderCreationRequest {
-    LocalDateTime orderDate = LocalDateTime.now();
+    LocalDateTime orderDate = LocalDateTime.now();//
     BigDecimal totalAmount;
-    Boolean status;
+    Boolean status = false;//
     String address;
-    String updateAt;
+//    String updateAt;
     String paymentStatus;
     String description;
     User user;

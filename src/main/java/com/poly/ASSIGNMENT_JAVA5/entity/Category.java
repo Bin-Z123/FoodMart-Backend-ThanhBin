@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Category {
     Long id;
     String name;
     boolean status = true;
-    Date createAt;
+    LocalDateTime createAt = LocalDateTime.now();
     String description;
     @OneToMany(mappedBy = "category")//,fetch = FetchType.LAZY
     @JsonManagedReference

@@ -33,7 +33,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, CorsConfigurationSource corsConfigurationSource) throws Exception {
         httpSecurity
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/login","/logout","/api/admin/**","/api/user/cart/**","api/user/address/**","/api/register/**"))
+                        .ignoringRequestMatchers("/login",
+                                "/logout",
+                                "/api/admin/**",
+                                "/api/user/cart/**",
+                                "api/user/address/**",
+                                "/api/register/**",
+                                "api/user/order/**"))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
