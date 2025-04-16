@@ -1,6 +1,7 @@
 package com.poly.ASSIGNMENT_JAVA5.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.poly.ASSIGNMENT_JAVA5.entity.Order;
 import com.poly.ASSIGNMENT_JAVA5.entity.User;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class OrderCreationRequest {
     LocalDateTime orderDate = LocalDateTime.now();//
     BigDecimal totalAmount;
-    Boolean status = false;//
+    String status = "PENDING";//
     String address;
 //    String updateAt;
     String paymentStatus;

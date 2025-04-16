@@ -23,7 +23,8 @@ public class Order {
     Long id;
     LocalDateTime orderDate = LocalDateTime.now();
     BigDecimal totalAmount;
-    Boolean status;
+    @Enumerated(EnumType.STRING)
+    OrderStatus status ;
     String address;
     String updateAt;
     @Enumerated(EnumType.STRING)
@@ -41,6 +42,12 @@ public class Order {
         COD,
         MOMO,
         BANK
+    }
+    public enum OrderStatus{
+        PENDING,
+        CONFIRMED,
+        DELIVERED,
+        CANCELLED
     }
 
 }

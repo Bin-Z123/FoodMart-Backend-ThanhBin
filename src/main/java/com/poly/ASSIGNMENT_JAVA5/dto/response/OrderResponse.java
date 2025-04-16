@@ -1,6 +1,7 @@
 package com.poly.ASSIGNMENT_JAVA5.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.poly.ASSIGNMENT_JAVA5.entity.Order;
 import com.poly.ASSIGNMENT_JAVA5.entity.User;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,7 +19,7 @@ public class OrderResponse {
     Long id;
     LocalDateTime orderDate;
     BigDecimal totalAmount;
-    Boolean status;
+    Order.OrderStatus status;
     String address;
     String updateAt;
     String paymentStatus;

@@ -44,7 +44,9 @@ public class ProductService {
     }
     //Post Product
     public ProductResponse createProducts(ProductCreationRequest request, MultipartFile file){
-        cloudinaryService.uploadFile(file);
+        if (file != null && !file.isEmpty()) {
+            cloudinaryService.uploadFile(file);
+        }
         Product product = productMapper.toProduct(request);
         return productMapper.toProductResponse(productRepository.save(product));
     }

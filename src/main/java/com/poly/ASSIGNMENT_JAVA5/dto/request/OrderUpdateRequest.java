@@ -1,5 +1,6 @@
 package com.poly.ASSIGNMENT_JAVA5.dto.request;
 
+import com.poly.ASSIGNMENT_JAVA5.entity.Order;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,5 +10,5 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderUpdateRequest {
-    Boolean status;
+    String status;
 }

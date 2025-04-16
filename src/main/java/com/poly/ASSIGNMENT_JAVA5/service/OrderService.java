@@ -47,7 +47,7 @@ public class OrderService {
 
         Order order = orderMapper.toOrder(request);
         order.setUser(user);
-        order.setStatus(false);
+        order.setStatus(Order.OrderStatus.PENDING);
         order.setOrderDate(LocalDateTime.now());
         order.setTotalAmount(request.getTotalAmount());
         Order saveOrder = orderRepository.save(order);

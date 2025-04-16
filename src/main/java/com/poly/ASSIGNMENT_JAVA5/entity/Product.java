@@ -2,6 +2,9 @@ package com.poly.ASSIGNMENT_JAVA5.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,7 +23,10 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @NotBlank(message = "Name product is required")
     String nameProduct;
+    @NotNull(message = "Price product is required")
+    @PositiveOrZero(message = "Price must be greater than 0")
     BigDecimal price;
     String image;
     boolean status = true;
