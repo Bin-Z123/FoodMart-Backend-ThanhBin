@@ -119,10 +119,10 @@
             <property name="tokens"
                       value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT,
                     INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF, INTERFACE_DEF, RECORD_DEF,
-                    COMPACT_CTOR_DEF, LITERAL_CASE, LITERAL_FINALLY,
+                    COMPACT_CTOR_DEF,LITERAL_FINALLY,
                     LITERAL_CATCH"/>
         </module>
-<!--        , LITERAL_SWITCH-->
+<!--        , LITERAL_SWITCH, LITERAL_CASE-->
         <module name="SuppressionXpathSingleFilter">
             <!-- suppression is required till https://github.com/checkstyle/checkstyle/issues/7541 -->
             <property name="id" value="RightCurlyAlone"/>
