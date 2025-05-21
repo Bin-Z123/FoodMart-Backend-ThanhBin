@@ -31,13 +31,21 @@ jobs:
       - name: Format code with Spotless
         run: mvn spotless:apply
 
-      - name: Run checkstyle (check format code)
-        run: mvn checkstyle:check || true
+#      - name: Run checkstyle (check format code)
+#        run: mvn checkstyle:check || true
 
       - name: Build with Maven (skip Tests)
         run: mvn clean install -DskipTests
 
-
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: | 
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-foodmart:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/spring-foodmart:latest
 #      - name: Generate JaCoCo Coverage Report
 #        run: mvn jacoco:report
 #
