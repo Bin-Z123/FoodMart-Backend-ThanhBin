@@ -31,9 +31,6 @@ jobs:
       - name: Format code with Spotless
         run: mvn spotless:apply
 
-#      - name: Run checkstyle (check format code)
-#        run: mvn checkstyle:check || true
-
       - name: Build with Maven (skip Tests)
         run: mvn clean install -DskipTests
 
@@ -46,11 +43,3 @@ jobs:
         run: | 
           docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-foodmart:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/spring-foodmart:latest
-#      - name: Generate JaCoCo Coverage Report
-#        run: mvn jacoco:report
-
-#      - name: Upload Coverage Report Artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: coverage-report
-#          path: target/site/jacoc

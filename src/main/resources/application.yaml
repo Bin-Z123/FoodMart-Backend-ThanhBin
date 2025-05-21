@@ -7,7 +7,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=java5_foodmart;encrypt=false;trustServerCertificate=True
+    url: jdbc:sqlserver://sqlserver:1433;databaseName=java5_foodmart;encrypt=false;trustServerCertificate=True
     username: sa
     password: Sa@123456789
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
