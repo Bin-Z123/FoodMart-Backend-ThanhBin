@@ -48,7 +48,6 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/spring-foodmart:latest
 #      - name: Generate JaCoCo Coverage Report
 #        run: mvn jacoco:report
-#
 #      - name: Upload Coverage Report Artifact
 #        uses: actions/upload-artifact@v4
 #        with:
