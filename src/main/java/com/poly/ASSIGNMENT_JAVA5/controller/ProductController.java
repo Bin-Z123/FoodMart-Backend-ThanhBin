@@ -36,7 +36,7 @@ public class ProductController {
 
     //Put
     @PutMapping("/admin/product/{id}")
-    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductUpdateRequest request, @RequestPart(value = "file", required = false) MultipartFile file){
+    public ApiResponse<ProductResponse> updateProduct(@PathVariable Long id, @RequestPart(value = "product") ProductUpdateRequest request, @RequestPart(value = "file", required = false) MultipartFile file){
         ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
         if (file != null && !file.isEmpty()) {
             apiResponse.setResult(productService.updateProducts(id, request, file));

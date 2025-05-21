@@ -22,4 +22,5 @@ public class ProductUpdateRequest {
     String description;
     Category category;
     Long category_id;
+    String stockQuantity;
 }

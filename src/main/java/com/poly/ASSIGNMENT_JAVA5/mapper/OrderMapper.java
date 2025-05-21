@@ -13,6 +13,7 @@ import org.mapstruct.factory.Mappers;
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
     @Mapping(target = "user_id", source = "user.id")
+    @Mapping(target = "user_fullname", source = "user.fullname")
     OrderResponse toOrderResponse(Order order);
     Order toOrder(OrderCreationRequest request);
 

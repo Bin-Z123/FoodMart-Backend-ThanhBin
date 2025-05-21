@@ -32,7 +32,7 @@ public class OrderController {
             apiResponse.setResult(orderService.createOrder(idUser,request));
             apiResponse.setMessage("Tạo đơn hàng thành công");
             return ResponseEntity.ok(apiResponse);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             apiResponse.setMessage("Tạo đơn hàng thất bại: "+e.getMessage());
             return ResponseEntity.badRequest().body(apiResponse);
         }

@@ -5,17 +5,23 @@ import com.poly.ASSIGNMENT_JAVA5.dto.response.OrderResponse;
 import com.poly.ASSIGNMENT_JAVA5.entity.*;
 import com.poly.ASSIGNMENT_JAVA5.mapper.OrderMapper;
 import com.poly.ASSIGNMENT_JAVA5.repository.*;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.payos.PayOS;
+import vn.payos.type.CheckoutResponseData;
+import vn.payos.type.ItemData;
+import vn.payos.type.PaymentData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +33,23 @@ public class OrderService {
     OrderRepository orderRepository;
     OrderDetailRepository orderDetailRepository;
     OrderMapper orderMapper;
+    PayOS payOS;
 
     //Lấy order theo user
     public List<Order> getOrderByUser(Long idUser){
         userRepository.findById(idUser).orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
         return  orderRepository.findAllByUser_Id(idUser);
     }
+    //Lấy tất cả Order
+    public List<OrderResponse> getAllOrder(){
+        return orderRepository.findAll().stream()
+                .map(orderMapper::toOrderResponse)
+                .collect(Collectors.toList());
+    }
 
-    //Tạo đơn hàng :)
+    //Tạo đơn hàng :) , HttpServletResponse response
     @Transactional
-    public Order createOrder(Long idUser, OrderCreationRequest request){
+    public Order createOrder(Long idUser, OrderCreationRequest request) throws Exception {
         //Lấy thông tin người dùng
         User user = userRepository.findById(idUser).orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
         // Lấy giỏ hàng của người dùng
@@ -54,7 +67,6 @@ public class OrderService {
 
         List<OrderDetail> orderDetails = new  ArrayList<>();
         List<Product> updateProduct = new ArrayList<>();
-
         // Tạo chi tiết đơn hàng
         for (Cart item: carts){
             Product product = item.getProduct();
@@ -77,6 +89,31 @@ public class OrderService {
         //Xoá giỏ hàng sau khi order
         cartRepository.deleteAllByUser(user);
         return saveOrder;
+        // tạo link thanh toán
+//        Long orderCode = System.currentTimeMillis()/1000;
+//        List<ItemData> itemDataList = saveOrder.getOrderDetail()
+//                .stream()
+//                .map(i -> ItemData.builder()
+//                        .name(i.getProduct().getNameProduct())
+//                        .quantity(i.getQuantity())
+//                        .price(Integer.parseInt(i.getProduct().getPrice().toString()))
+//                        .build())
+//                .toList();
+//
+//        PaymentData paymentData = PaymentData.builder()
+//                .orderCode(orderCode)
+//                .amount(Integer.parseInt(saveOrder.getTotalAmount().toString()))
+//                .description(saveOrder.getUser().getFullname() + " da dat don hang " + orderCode)
+//                .buyerName(saveOrder.getUser().getFullname())
+//                .buyerEmail(saveOrder.getUser().getEmail())
+//                .buyerAddress(saveOrder.getAddress())
+//                .returnUrl("http://localhost:8080/api/user/order")
+//                .cancelUrl("http://localhost:8080/api/user/order")
+//                .items(itemDataList)
+//                .build();
+//        CheckoutResponseData result = payOS.createPaymentLink(paymentData);
+//        String checkoutUrl = result.getCheckoutUrl();
+
     }
 
     private static OrderDetail getOrderDetail(Cart item, Order saveOrder) {

@@ -1,5 +1,6 @@
 package com.example.ASSIGNMENT_JAVA5;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,8 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.testng.Assert.assertEquals;
-
 public class LoginApiTest {
+
     @Test
     public void testLoginSuccess() throws IOException, InterruptedException {
         // Tạo client HTTP
