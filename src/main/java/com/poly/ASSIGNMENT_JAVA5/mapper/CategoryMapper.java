@@ -10,9 +10,11 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+  CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    CategoryResponse toCategoryResponse(Category category);
-    Category toCategory(CategoryCreationRequest request);
-    void updateCategory(@MappingTarget Category category, CategoryUpdateRequest request);
+  CategoryResponse toCategoryResponse(Category category);
+
+  Category toCategory(CategoryCreationRequest request);
+
+  void updateCategory(@MappingTarget Category category, CategoryUpdateRequest request);
 }

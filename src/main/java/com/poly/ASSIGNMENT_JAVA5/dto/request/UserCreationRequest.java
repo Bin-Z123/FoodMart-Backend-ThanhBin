@@ -10,11 +10,13 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreationRequest {
-    @Size(min = 6, max = 18)
-    String username;
-    @Size(min = 6, max = 18)
-    String password;
-    String email;
-    String fullname;
-    Boolean role = false;
+  @Size(min = 6, max = 18)
+  String username;
+
+  @Size(min = 6, max = 18)
+  String password;
+
+  String email;
+  String fullname;
+  Boolean role = false;
 }

@@ -9,8 +9,8 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 public class ChangePasswordRequest {
-    Long id;
-    String oldPassword;
-    String newPassword;
-    String confirmPassword;
+  Long id;
+  String oldPassword;
+  String newPassword;
+  String confirmPassword;
 }

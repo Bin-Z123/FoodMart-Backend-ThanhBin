@@ -8,15 +8,17 @@ import vn.payos.PayOS;
 
 @Configuration
 public class PayOSConfig implements WebMvcConfigurer {
-    @Value("${PAYOS_CLIENT_ID}")
-    private String clientId;
-    @Value("${PAYOS_API_KEY}")
-    private String apiKey;
-    @Value("${PAYOS_CHECKSUM_KEY}")
-    private String checksumKey;
+  @Value("${PAYOS_CLIENT_ID}")
+  private String clientId;
 
-    @Bean
-    public PayOS payOS(){
-        return new PayOS(clientId, apiKey, checksumKey);
-    }
+  @Value("${PAYOS_API_KEY}")
+  private String apiKey;
+
+  @Value("${PAYOS_CHECKSUM_KEY}")
+  private String checksumKey;
+
+  @Bean
+  public PayOS payOS() {
+    return new PayOS(clientId, apiKey, checksumKey);
+  }
 }

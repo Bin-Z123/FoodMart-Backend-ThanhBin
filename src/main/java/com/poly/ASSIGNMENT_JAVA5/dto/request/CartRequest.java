@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 public class CartRequest {
-    Long idUser;
-    Long idProduct;
-    int quantity;
+  Long idUser;
+  Long idProduct;
+  int quantity;
 }

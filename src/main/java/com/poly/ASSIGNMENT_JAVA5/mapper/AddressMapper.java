@@ -10,13 +10,14 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface AddressMapper
-{
-    AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
-    @Mapping(target = "user_id", source = "user.id")
-    @Mapping(target = "user_fullname", source = "user.fullname")
-    AddressResponse toAddressResponse(Address address);
+public interface AddressMapper {
+  AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
-    Address toAddress(AddressCreationRequest request);
-    void updateAddress(@MappingTarget Address address, AddressUpdateRequest request);
+  @Mapping(target = "user_id", source = "user.id")
+  @Mapping(target = "user_fullname", source = "user.fullname")
+  AddressResponse toAddressResponse(Address address);
+
+  Address toAddress(AddressCreationRequest request);
+
+  void updateAddress(@MappingTarget Address address, AddressUpdateRequest request);
 }

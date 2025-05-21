@@ -11,11 +11,13 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
-    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
-    @Mapping(target = "user_id", source = "user.id")
-    @Mapping(target = "user_fullname", source = "user.fullname")
-    OrderResponse toOrderResponse(Order order);
-    Order toOrder(OrderCreationRequest request);
+  OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    void updateOrder(@MappingTarget Order order, OrderUpdateRequest request);
+  @Mapping(target = "user_id", source = "user.id")
+  @Mapping(target = "user_fullname", source = "user.fullname")
+  OrderResponse toOrderResponse(Order order);
+
+  Order toOrder(OrderCreationRequest request);
+
+  void updateOrder(@MappingTarget Order order, OrderUpdateRequest request);
 }

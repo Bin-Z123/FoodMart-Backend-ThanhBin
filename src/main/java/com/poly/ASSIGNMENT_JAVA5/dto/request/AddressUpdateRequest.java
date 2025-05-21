@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressUpdateRequest {
-    String city;
-    String district;
-    String street;
-    String description;
-    int phone;
+  String city;
+  String district;
+  String street;
+  String description;
+  int phone;
 }

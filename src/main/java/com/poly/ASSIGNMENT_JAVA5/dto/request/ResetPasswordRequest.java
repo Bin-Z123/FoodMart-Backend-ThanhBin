@@ -9,8 +9,8 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 public class ResetPasswordRequest {
-    String email;
-    String otp;
-    String password;
-    String confirmPassword;
+  String email;
+  String otp;
+  String password;
+  String confirmPassword;
 }

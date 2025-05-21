@@ -10,9 +10,11 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdateRequest {
-    String fullname;
-    @Size(min = 6, max = 18)
-    String password;
-    Boolean role = true;
-    String avatar = "avt.jpg";
+  String fullname;
+
+  @Size(min = 6, max = 18)
+  String password;
+
+  Boolean role = true;
+  String avatar = "avt.jpg";
 }

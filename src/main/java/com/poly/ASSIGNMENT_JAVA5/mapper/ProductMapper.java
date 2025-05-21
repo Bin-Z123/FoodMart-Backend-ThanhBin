@@ -13,24 +13,24 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
+  ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    @Mapping(target = "category_id", source = "category.id")
-    @Mapping(target = "category_name", source = "category.name")
-    @Mapping(target = "image", source = "image")
-    ProductResponse toProductResponse(Product product);
+  @Mapping(target = "category_id", source = "category.id")
+  @Mapping(target = "category_name", source = "category.name")
+  @Mapping(target = "image", source = "image")
+  ProductResponse toProductResponse(Product product);
 
+  Product toProduct(ProductCreationRequest request);
 
-    Product toProduct(ProductCreationRequest request);
-    @Mapping(target = "category", expression = "java(mapCategory(request.getCategory_id()))")
-    void updateProduct(@MappingTarget Product product, ProductUpdateRequest request);
+  @Mapping(target = "category", expression = "java(mapCategory(request.getCategory_id()))")
+  void updateProduct(@MappingTarget Product product, ProductUpdateRequest request);
 
-    default Category mapCategory(Long id){
-        if (id == null){
-            return null;
-        }
-        Category category = new Category();
-        category.setId(id);
-        return category;
+  default Category mapCategory(Long id) {
+    if (id == null) {
+      return null;
     }
+    Category category = new Category();
+    category.setId(id);
+    return category;
+  }
 }

@@ -28,11 +28,15 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Format code with Spotless
+        run: mvn spotless:apply
+
+      - name: Run checkstyle (check format code)
+        run: mvn checkstyle:check || true
+
       - name: Build with Maven (skip Tests)
         run: mvn clean install -DskipTests
 
-      - name: Run checkstyle (format code)
-        run: mvn checkstyle:check || true
 
 #      - name: Generate JaCoCo Coverage Report
 #        run: mvn jacoco:report
